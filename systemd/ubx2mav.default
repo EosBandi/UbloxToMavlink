@@ -1,0 +1,14 @@
+# /etc/default/ubx2mav - command line options for the ubx2mav service
+#
+# GPS on the Pi header UART (disable Bluetooth: dtoverlay=disable-bt), flight
+# controller USB plugged into the Pi Zero's USB port.
+# Run "ubx2mav --help" for all options.
+UBX2MAV_OPTS="--gps-dev /dev/ttyAMA0 --fc /dev/ttyACM0 --fc-baud 115200"
+
+# Examples:
+#  GPS on a USB-serial adapter, FC on the header UART at 921600:
+#UBX2MAV_OPTS="--gps-dev /dev/ttyUSB0 --fc /dev/ttyAMA0 --fc-baud 921600"
+#  FC reachable over the network (mavlink-router / MAVProxy endpoint):
+#UBX2MAV_OPTS="--gps-dev /dev/ttyAMA0 --fc udp://192.168.1.10:14560"
+#  ZED-F9P moving-baseline rover providing yaw, save config to the module:
+#UBX2MAV_OPTS="--gps-dev /dev/ttyAMA0 --fc /dev/ttyACM0 --yaw-relposned --save-config"

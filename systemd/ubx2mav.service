@@ -1,0 +1,33 @@
+[Unit]
+Description=u-blox GPS to ArduPilot MAVLink GPS_INPUT bridge
+Documentation=https://ardupilot.org/copter/docs/common-gps-for-mavlink.html
+After=dev-ttyAMA0.device
+Wants=dev-ttyAMA0.device
+
+[Service]
+Type=simple
+EnvironmentFile=-/etc/default/ubx2mav
+ExecStart=/usr/local/bin/ubx2mav $UBX2MAV_OPTS
+Restart=always
+RestartSec=2
+# low latency matters more than fairness here
+Nice=-10
+CPUSchedulingPolicy=fifo
+CPUSchedulingPriority=30
+# hardening (needs access to /dev/tty* only)
+User=root
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+DevicePolicy=closed
+DeviceAllow=char-ttyS rw
+DeviceAllow=char-ttyAMA rw
+DeviceAllow=/dev/ttyAMA0 rw
+DeviceAllow=/dev/ttyS0 rw
+DeviceAllow=/dev/ttyACM0 rw
+DeviceAllow=/dev/ttyUSB0 rw
+DeviceAllow=/dev/ttyUSB1 rw
+
+[Install]
+WantedBy=multi-user.target
